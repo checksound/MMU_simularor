@@ -32,3 +32,41 @@ test('test binary conversion', function(t) {
 
 
 });
+
+test('test binary conversion', function(t) {
+    t.plan(3);
+
+    var converter = new Converter([]);
+
+    var value = converter.calculateDecimal([1, 1, 1]);
+
+    t.isEqual(value, 7);
+
+    value = converter.calculateDecimal([]);
+
+    t.isEqual(value, 0);
+
+    value = converter.calculateDecimal([0, 1, 1, 1]);
+
+    t.isEqual(value, 7);
+
+});
+
+
+test('test complete conversion', function(t) {
+    t.plan(2);
+
+    const converter = new Converter([10, 7, 9, 5]);
+
+    var byteArrayPhisicalAddress = converter.doConversion(6248);
+
+    const expectedA = [0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0];
+
+    t.deepEqual(byteArrayPhisicalAddress, expectedA);
+
+    byteArrayPhisicalAddress = converter.doConversion(10344);
+
+    const expectedB = [1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0];
+
+    t.deepEqual(byteArrayPhisicalAddress, expectedB);
+});
