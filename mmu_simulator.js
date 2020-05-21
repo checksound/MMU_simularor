@@ -1,5 +1,8 @@
+'use strict'
+
 const readline = require('readline');
 const Converter = require('./converter');
+const ConversionUtils = require('./ConversionUtils');
 const CustomError = require('./Errors');
 
 const rl = readline.createInterface({
@@ -68,11 +71,11 @@ async function init() {
         }
       ];
 
-      answer = await inquirer
+      answers = await inquirer
         .prompt(questionNumFrame);
 
-      framesStatus[answer.numFrame] = 0;
-      pageTable.push(answer.numFrame);
+      framesStatus[answers.numFrame] = 0;
+      pageTable.push(answers.numFrame);
 
     }
 
@@ -95,13 +98,47 @@ async function run() {
   console.log(`Page table del processo P: [${pageTable}]`);
 
   const converter = new Converter(pageTable);
-  try {
-    converter.doConversion(777777);
 
-  } catch (e) {
-    console.log(e);
+  while(true) {
+    const questionLogicAddress = [
+      { 
+        name: 'logicAddress',
+        type: 'input',
+        message: 'Inserisci l\'indirizzo logico o \'quit\' se vuoi interrompere:',
+        validate: function( value ) {
+          if (value.length) {
+            if(value == 'quit' || parseInt(value))
+              return true;
+            else {
+              return 'Prego, inserisci l\'indirizzo logico o \'quit\''
+            }
+          } else {
+            return 'Prego, inserisci l\'indirizzo logico o \'quit\'';
+          }
+        }
+      }
+    ];
+
+    var answers = await inquirer
+      .prompt(questionLogicAddress);
+
+    if(answers.logicAddress == 'quit')
+      break; // exit from program
+    
+    var logicAddress = parseInt(answers.logicAddress);
+
+    try {
+
+      var byteArrayPhisicalAddress = converter.doConversion(logicAddress);
+      var decimalPhisicAddress = ConversionUtils.calculateDecimal(byteArrayPhisicalAddress);
+      console.log(`Indirizzo fisico: [${byteArrayPhisicalAddress}] --> ${decimalPhisicAddress}`);
+  
+    } catch (e) {
+      console.log(e);
+    }
+
   }
-
+  
 }
 
 run();

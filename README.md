@@ -62,3 +62,6 @@ Algoritmo implementato in nodejs
 
 `node mmu_simulator.js`
 
+![](./output_simulator.PNG)
+
+
