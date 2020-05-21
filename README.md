@@ -58,9 +58,22 @@ Il programma può essere visto quindi come un simulatore del lavoro che fa l'MMU
 
 ## IMPLEMENTAZIONE in NODEJS
 
-Algoritmo implementato in nodejs
+Algoritmo implementato in nodejs.
 
-`node mmu_simulator.js`
+Per lanciare l'applicazione: `node mmu_simulator.js`
+
+Oppure installarla globalmente:
+
+```
+npm install -g
+```
+che la registra come `mmusimulator`.
+
+Quindi per eseguirla, da command line:
+
+`mmusimulator`
+
+Output di esempio, esecuzione del programma:
 
 ![](./output_simulator.PNG)
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 'use strict'
 
 const readline = require('readline');
@@ -5,26 +7,15 @@ const Converter = require('./converter');
 const ConversionUtils = require('./ConversionUtils');
 const CustomError = require('./Errors');
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
-
-/*
-rl.question('What do you think of Node.js? ', (answer) => {
-  // TODO: Log the answer in a database
-  console.log(`Thank you for your valuable feedback: ${answer}`);
-
-  rl.close();
-});
-*/
-
-var inquirer = require('inquirer');
+const inquirer = require('inquirer');
+const chalk = require('chalk');
+const clear = require('clear');
+const figlet = require('figlet');
 
 var framesStatus = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
 var pageTable = [];
 
-async function init() {
+const init = async () => {
   const questionNumPages = [
     { 
       name: 'numPagine',
@@ -83,13 +74,21 @@ async function init() {
   
 }
 
-function introduzione() {
+const introduzione = () => {
+  clear();
+
+  console.log(
+    chalk.yellow(
+      figlet.textSync('MMU Simu', { horizontalLayout: 'full' })
+    )
+  );
+
   console.log('Simulatore MMU - memoria di 64K con pagine di 4K');
   console.log('Converte indirizzi logici nel corrispettivo indirizzo fisico');
 }
 
 
-async function run() {
+const run = async () => {
   introduzione();
 
   await init();
