@@ -31,7 +31,38 @@ function calculateDecimal(byteArray) {
 
 }
 
+function calculateBinaryCompact(valueDecimal) {
+
+    var binaryCompactArray = new Uint16Array(1);
+    var binaryMaskOne = new Uint16Array([0x8000]);
+    
+    var shift = 0;
+    while(valueDecimal != 0) {
+        var div = Math.trunc(valueDecimal/2);
+        var rem = valueDecimal % 2;
+        valueDecimal = div;
+        shift ++;
+        binaryCompactArray[0] = binaryCompactArray[0] >> 1;
+        if(rem == 1){
+            binaryCompactArray[0] = binaryMaskOne[0] | binaryCompactArray[0];
+        } 
+        
+    }
+
+    binaryCompactArray[0] = binaryCompactArray[0] >> (16-shift);
+
+    return binaryCompactArray[0];
+}
+
+function calculateDecimalCompact(registerValue) {
+
+    // scorri 0 --> 15 
+
+}
+
 module.exports = {
     calculateBinary: calculateBinary,
-    calculateDecimal: calculateDecimal
+    calculateDecimal: calculateDecimal,
+    calculateBinaryCompact: calculateBinaryCompact,
+    calculateDecimalCompact: calculateDecimalCompact
 }
