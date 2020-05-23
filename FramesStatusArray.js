@@ -24,10 +24,29 @@ function unsetFrameUse(position) {
     framesStatus[0] = u16Bits;
 }
 
+/*
+  Solo per visualizzare
+*/
+function toString() {
+    var outputArray = [];
+
+    for(var index = 0; index < 16; index++) {
+        if(isFrameUsed(index)){
+            outputArray.push(0);
+        } else {
+            outputArray.push(1);
+        }
+    }
+
+    return "[" + outputArray.toString() + "]";
+}
+
+
 module.exports = {
     isFrameUsed: isFrameUsed,
     setFrameUse: setFrameUse,
-    unsetFrameUse: unsetFrameUse
+    unsetFrameUse: unsetFrameUse,
+    toString: toString
 }
 
 

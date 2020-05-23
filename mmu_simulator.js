@@ -12,7 +12,8 @@ const chalk = require('chalk');
 const clear = require('clear');
 const figlet = require('figlet');
 
-var framesStatus = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+const framesStatusArray = require('./FramesStatusArray');
+
 var pageTable = [];
 
 const init = async () => {
@@ -51,7 +52,7 @@ const init = async () => {
               return `Inserisci il numero di frame della pagina ${currentPage}.`
             }
             if (value >= 0 && value < 16) {
-              if (framesStatus[value] == 1)
+              if (!framesStatusArray.isFrameUsed(value))
                 return true;
               else 
                 return `Il frame ${value} già utilizzato`;
@@ -65,7 +66,7 @@ const init = async () => {
       answers = await inquirer
         .prompt(questionNumFrame);
 
-      framesStatus[answers.numFrame] = 0;
+      framesStatusArray.setFrameUse(answers.numFrame);
       pageTable.push(answers.numFrame);
 
     }
@@ -93,7 +94,8 @@ const run = async () => {
 
   await init();
 
-  // console.log(framesStatus);
+  // console.log(framesStatusArray.toString());
+  
   console.log(`Page table del processo P: [${pageTable}]`);
 
   const converter = new Converter(pageTable);
