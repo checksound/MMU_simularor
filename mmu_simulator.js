@@ -5,7 +5,7 @@
 const readline = require('readline');
 const Converter = require('./converter');
 const ConversionUtils = require('./ConversionUtils');
-const CustomError = require('./Errors');
+const {CustomError} = require('./CustomErrors');
 
 const inquirer = require('inquirer');
 const chalk = require('chalk');

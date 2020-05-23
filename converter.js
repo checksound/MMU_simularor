@@ -1,7 +1,7 @@
 
 'use strict'
 
-const CustomError = require('./Errors');
+const {OutOfRangeAddressError} = require('./CustomErrors');
 const ConversionUtils = require('./ConversionUtils');
 
 class Converter {
@@ -16,7 +16,7 @@ class Converter {
         var maxAddress = numPages * 4 * 1024 -1;
 
         if (value >= maxAddress)
-            throw new CustomError(`Address ${value} eccede indirizzo limite ${maxAddress}`);
+            throw new OutOfRangeAddressError(`Address ${value} eccede indirizzo limite ${maxAddress}`);
 
         var logicalAddressByteArray = ConversionUtils.calculateBinary(value, 16);
 

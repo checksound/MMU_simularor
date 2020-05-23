@@ -3,7 +3,7 @@
 const test = require('tape');
 
 const Converter = require('./converter');
-const CustomError = require('./Errors');
+const {OutOfRangeAddressError} = require('./CustomErrors');
  
 test('test initalization converter', function (t) {
     t.plan(2);
@@ -14,7 +14,7 @@ test('test initalization converter', function (t) {
         converter.doConversion(77777);
         t.fail();
     } catch (e) {
-        if (e instanceof CustomError){
+        if (e instanceof OutOfRangeAddressError){
             t.pass('OK CustomError');
         }
     }
@@ -22,7 +22,6 @@ test('test initalization converter', function (t) {
     converter.doConversion(7777);
     t.pass('OK conversion');
 });
-
 
 test('test complete conversion', function(t) {
     t.plan(2);
@@ -41,3 +40,4 @@ test('test complete conversion', function(t) {
 
     t.deepEqual(byteArrayPhisicalAddress, expectedB);
 });
+
