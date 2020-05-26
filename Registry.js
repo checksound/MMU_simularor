@@ -4,16 +4,18 @@ const bitMask = new Uint16Array([0x8000]);
 
 class Registry {
 
-    constructor() {
-        this.registry = new Uint16Array(1);
+    constructor(value) {
+        this.registry = new Uint16Array([value]);
+    }
+
+    static getRegistry(numPage, offset) {
+        var numPagePart = numPage << 12;
+        var newRegistryValue = numPagePart | offset;
+        return new Registry(newRegistryValue);
     }
 
     getValue() {
         return this.registry[0]
-    }
-
-    setValue(value) {
-        this.registry[0] = value;
     }
 
     getValueOfBit(position) {
@@ -37,21 +39,27 @@ class Registry {
 
     }
 
-    setNumPagePart(value) {
-
-        if(value < 0 || value > 16) throw new Error('Out of range num page');
-
-        this.registry[0] = this.registry[0] & new Uint16Array([0x0FFF]);
-
-        const valueBitMaskNumPagePart = (new Uint16Array([value]))[0] << 12;
-
-        this.registry[0] = this.registry[0] | valueBitMaskNumPagePart;
-
-    }
-
     getOffesetPart() {
 
+        const bitMaskOffsetPart = new Uint16Array([0x0FFFF]); 
+        var val = this.registry[0];
+
+        val = (val & bitMaskOffsetPart[0]);
+
+        return val;
     }
+
+    setFrame(frameNum) {
+        
+        var offsetPart = this.getOffesetPart();
+
+        var frameNum = frameNum << 12;
+
+        var newRegistryValue = frameNum | offsetPart;
+
+        return new Registry(newRegistryValue);
+    }
+
 }
 
 module.exports = Registry

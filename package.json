@@ -7,6 +7,7 @@
     "mmusimulator": "./mmu_simulator.js"
   },
   "scripts": {
+    "debug": "node --nolazy --inspect-brk=9229 ConversionUtilCompactTest.js",
     "test": "node ConversionUtilTest.js && node converterTest.js && node FramesStatusArrayTest.js"
   },
   "author": "CAM",
@@ -15,7 +16,8 @@
     "chalk": "^4.0.0",
     "clear": "^0.1.0",
     "figlet": "^1.4.0",
-    "inquirer": "^7.1.0"
+    "inquirer": "^7.1.0",
+    "underscore": "^1.10.2"
   },
   "devDependencies": {
     "tape": "^5.0.0"

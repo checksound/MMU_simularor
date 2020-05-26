@@ -14,7 +14,7 @@ test('test binary conversion', function(t) {
 
  });
 
-test('test binary conversion', function(t) {
+test('test decimal conversion', function(t) {
     t.plan(3);
 
     var value = ConversionUtils.calculateDecimal([1, 1, 1]);
